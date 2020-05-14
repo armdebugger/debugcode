@@ -1,0 +1,35 @@
+github heap-tracer
+
+
+---------------------------------------------------------------------------
+-Bsymbolic-functions
+-Bsymbolic
+---------------------------------------------------------------------------
+https://stackoverflow.com/questions/10448254/how-to-use-gdb-with-ld-preload
+gdb your_program
+
+(gdb) set environment LD_PRELOAD ./yourso.so
+(gdb) start
+
+---------------------------------------------------------------------------
+Simple C++ Symbol Visibility Demo
+https://labjack.com/news/simple-cpp-symbol-visibility-demo
+
+
+LD_PRELOAD
+The environment variable LD_PRELOAD can be used to force the runtime loader to load symbols from one library instead of others. However:
+
+    LD_PRELOAD is ignored for symbols that were compiled with hidden visibility.
+    LD_PRELOAD is ignored for libraries that were linked with -Bsymbolic/-Bsymbolic-functions.
+
+------------------------------------------------------------------------------------
+
+gcc -shared -fpic -o libpreload.so preload.c -ldl
+
+gcc -o test test.c
+
+LD_PRELOAD=./libpreload.so ./test
+
+
+gcc inject.c --shared -fPIC -o inject.so
+LD_PRELOAD=$PWD/inject.so ping 127.0.0.1
